@@ -4,7 +4,7 @@ Lectures are combined with practice.
 
 Sample_0:
 ===
-- Project Stack: ASP.Net Core Wep Applacition Empty
+- Project Stack: ASP.Net Core Wep Application Empty
 - Release Notes:
   - Processing pipeline and middleware
   - Terminal Middleware
