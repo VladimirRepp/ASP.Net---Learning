@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "Sample_ASP_NET_Core/1.0.0": {
+        "runtime": {
+          "Sample_ASP_NET_Core.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Sample_ASP_NET_Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
