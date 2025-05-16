@@ -9,3 +9,5 @@ Sample_0:
   - Processing pipeline and middleware
   - Terminal Middleware
   - Sending responses - HttpResponse
+  - Getting request data - HttpRequest
+  - Sending files
