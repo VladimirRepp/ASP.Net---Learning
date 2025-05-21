@@ -9,7 +9,7 @@ namespace Sample_0
             var builder = WebApplication.CreateBuilder(args);
             var app = builder.Build();
 
-            Sample_4(ref app);
+            Sample_5(ref app);
 
             app.Run();
         }
@@ -231,9 +231,120 @@ namespace Sample_0
         private static void Sample_4(ref WebApplication app)
         {
             // Пример 1 - отправка файла 
+            //app.Run(
+            //    //async context => await context.Response.SendFileAsync("D:\\tree.jpg") 
+            //    async context => await context.Response.SendFileAsync("img\\tree.jpg")
+            //);
+
+            // Пример 2 - отправка html страницы
+            //app.Run(
+            //    async context =>
+            //    {
+            //        context.Response.ContentType = "text/html; charset=utf-8";
+            //        await context.Response.SendFileAsync("html\\index.html");
+            //    }
+            //);
+
+            // Пример 3 - обработка пути 
+            //app.Run(
+            //    async context =>
+            //    {
+            //        var path = context.Request.Path;
+            //        var fullPath = $"html/{path}.html";
+            //        var response = context.Response;
+
+            //        response.ContentType = "text/html; charset=utf-8";
+
+            //        if (File.Exists(fullPath))
+            //        {
+            //            await response.SendFileAsync(fullPath);
+            //        }
+            //        else
+            //        {
+            //            response.StatusCode = 404;
+            //            await response.WriteAsync("<h2>Not Found</h2>");
+            //        }
+            //    }
+            //);
+
+            // Пример 4 - авто-загрузка файла (сервер -> клиент)
             app.Run(
-                //async context => await context.Response.SendFileAsync("D:\\tree.jpg") 
-                async context => await context.Response.SendFileAsync("img\\tree.jpg")
+                async context =>
+                {
+                    var path = context.Request.Path;
+
+                    if (path == "/")
+                    {
+                        await context.Response.WriteAsync("Input to '/download' for download \'tree.jpg\'");
+                    }
+
+                    if (path == "/download")
+                    {
+                        context.Response.Headers.ContentDisposition = "attachment; filename=img_tree.jpg";
+                        await context.Response.SendFileAsync("img/tree.jpg");
+                    } 
+                }
+            );
+        }
+
+        /// <summary>
+        /// Отправка форм
+        /// </summary>
+        /// <param name="app"></param>
+        private static void Sample_5(ref WebApplication app)
+        {
+            // Пример 1 - обработка формы ввода
+            app.Run(
+                async context =>
+                {
+                    var response = context.Response;
+                    var request = context.Request;
+
+                    response.ContentType = "text/html; charset=utf-8";
+
+                    if (request.Path == "/" || request.Path == "/login")
+                    {
+                        await response.SendFileAsync("html/login.html");
+                    }
+                    else if (request.Path == "/post_user_login")
+                    {
+                        var form = request.Form;
+                        string login = form["login"];
+                        string password = form["password"];
+
+                        if (login == "log1" && password == "1111")
+                        {
+                            await response.SendFileAsync("html/index.html");
+                        }
+                        else
+                        {
+                            await response.WriteAsync($"<div><h3>{login} - {password}: Not Found!</h3></div>");
+                        }
+                    }
+                    else if (request.Path == "/post_user")
+                    {
+                        var form = request.Form;
+
+                        string name = form["name"];
+                        string age = form["age"];
+
+                        string[] languages = form["languages"];
+
+                        string langStr = "";
+                        foreach(var lang in languages)
+                        {
+                            langStr += lang + " ";
+                        }
+
+                        await response.WriteAsync(
+                            $"<div> " +
+                            $"<p> Name: {name} </p>" +
+                            $"<p> Age: {age} </p>" +
+                            $"<p> Languages: {langStr} </p>" +
+                            $"</div>"
+                            );
+                    }
+                }
             );
         }
     }
