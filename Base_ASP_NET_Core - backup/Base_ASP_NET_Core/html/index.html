@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Main Page</title>
+</head>
+<body>
+    <h1>Welcome!</h1>
+
+    <form method="post" action="post_user">
+        <p>Name: <input name="name" /></p>
+        <p>Age: <input name="age" type="number"/></p>
+
+        <p>
+            Languages:<br/>
+                      <select multiple name="languages">
+                          <option>C#</option>
+                          <option>C++</option>
+                          <option>C++</option>
+                          <option>PhP</option>
+                          <option>HTML</option>
+                          <option>CSS</option>
+                      </select>
+        </p>
+
+        <input type="submit" value="Send" />
+    </form>
+</body>
+</html>
